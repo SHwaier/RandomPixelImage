@@ -332,6 +332,7 @@
             this.THeight.Text = "metroTrackBar1";
             this.THeight.UseCustomBackColor = true;
             this.THeight.ValueChanged += new System.EventHandler(this.THeight_Scroll);
+            this.THeight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.THeight_MouseUp);
             // 
             // TWidth
             // 
@@ -349,6 +350,7 @@
             this.TWidth.Text = "metroTrackBar1";
             this.TWidth.UseCustomBackColor = true;
             this.TWidth.ValueChanged += new System.EventHandler(this.TWidth_ValueChanged);
+            this.TWidth.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TWidth_MouseUp);
             // 
             // label10
             // 
@@ -500,7 +502,7 @@
             this.TxtB.TabIndex = 52;
             this.TxtB.Text = "";
             this.TxtB.UseTallSize = false;
-            this.TxtB.TextChanged += new System.EventHandler(this.TxtB_TextChanged);
+            this.TxtB.Leave += new System.EventHandler(this.TxtB_Leave);
             // 
             // LblBlue
             // 
@@ -534,6 +536,7 @@
             this.TxtA.TabIndex = 50;
             this.TxtA.Text = "255";
             this.TxtA.UseTallSize = false;
+            this.TxtA.Leave += new System.EventHandler(this.TxtA_Leave);
             // 
             // LblGreen
             // 
@@ -567,7 +570,7 @@
             this.TxtR.TabIndex = 51;
             this.TxtR.Text = "";
             this.TxtR.UseTallSize = false;
-            this.TxtR.TextChanged += new System.EventHandler(this.TxtR_TextChanged);
+            this.TxtR.Leave += new System.EventHandler(this.TxtR_Leave);
             // 
             // LblRed
             // 
@@ -601,7 +604,7 @@
             this.TxtG.TabIndex = 49;
             this.TxtG.Text = "";
             this.TxtG.UseTallSize = false;
-            this.TxtG.TextChanged += new System.EventHandler(this.TxtG_TextChanged);
+            this.TxtG.Leave += new System.EventHandler(this.TxtG_Leave);
             // 
             // LayoutType
             // 
@@ -1167,6 +1170,7 @@
             this.TxtHeight.UseTallSize = false;
             this.TxtHeight.TextChanged += new System.EventHandler(this.TxtHeight_TextChanged);
             this.TxtHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Generate_KeyPress);
+            this.TxtHeight.Leave += new System.EventHandler(this.TxtHeight_Leave);
             // 
             // TxtWidth
             // 
@@ -1187,6 +1191,7 @@
             this.TxtWidth.UseTallSize = false;
             this.TxtWidth.TextChanged += new System.EventHandler(this.TxtWidth_TextChanged);
             this.TxtWidth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Generate_KeyPress);
+            this.TxtWidth.Leave += new System.EventHandler(this.TxtWidth_Leave);
             // 
             // LblWidth
             // 

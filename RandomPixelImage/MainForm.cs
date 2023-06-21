@@ -14,18 +14,17 @@ namespace RandomPixelImage
         /// Tells if there is an image generated.
         /// </summary>
         public bool IsGenerated;
+        private enum GenerationMode { 
+        Pixel,
+        Gradient,
+        Custom
+        }
         /// <summary>
-        /// Specifies That the generated image should be a pizel image
+        /// specifies the mode the algrothim is going to use to generate the image.
         /// </summary>
-        private bool IsPixel;
-        /// <summary>
-        /// Specifies That the generated image should be a gradient image
-        /// </summary>
-        private bool IsGradient;
-        /// <summary>
-        /// Specifies That the generated image is a custom image with custom height and width
-        /// </summary>
-        private bool IsCustom;
+        GenerationMode mode = GenerationMode.Pixel;
+
+        private Size ImageSize = Size.Empty;
 
         private readonly bool IsSizeChanging = false;
 
@@ -134,7 +133,37 @@ namespace RandomPixelImage
             Image img = PreviewBox.BackgroundImage;
             Size size = new Size(_Width, _Height);
             img = ResizeImage(img, size);
-            RuntimePicSave.BackgroundImage = img;            
+            RuntimePicSave.BackgroundImage = img;
+        }
+
+        /// <summary>
+        /// Validates the user input and makes sure that the input is a numeric input between 1-255. Will return -1 if invalid input, -2 if input is empty, andotherwise valid input will be returned.
+        /// </summary>
+        /// <param name="input">string input. The input the user enters, and will be validated</param>
+        /// <param name="a">int start range. User input will be evaluated based on this start range</param>
+        /// <param name="b">int end range. User input will be evaluated based on this end range</param>
+        /// <returns></returns>
+        public int ValidateNumericInput(string input, int a, int b)
+        {
+            int value = 0;
+            if (a == 0 && b == 0)
+            {
+                if (int.TryParse(input, out value))
+                {
+
+                    return value;
+                }
+            }
+            if (int.TryParse(input, out value) && value >= a && value <= b)
+            {
+
+                return value;
+            }
+            else
+            {
+                MessageBox.Show("The input you provided is invalid, please enter an integer number, between 1-255!", "Invalid Input");
+                return -1;
+            }
         }
 
         private void Generate_KeyPress(object sender, KeyPressEventArgs e)
@@ -167,6 +196,7 @@ namespace RandomPixelImage
                 {
                     SaveImage(img, sv.FileName);
                 }
+
                 img.Dispose();
                 sv.Dispose();
                 SavingMsg.Close();
@@ -215,13 +245,11 @@ namespace RandomPixelImage
         private void TWidth_ValueChanged(object sender, EventArgs e)
         {
             TxtSaveWidth.Text = TWidth.Value + "px";
-            UpdateSaveRuntime(TWidth.Value, THeight.Value);
         }
 
         private void THeight_Scroll(object sender, EventArgs e)
         {
             TxtSaveHeight.Text = THeight.Value + "px";
-            UpdateSaveRuntime(TWidth.Value, THeight.Value);
         }
 
         private void TQuality_ValueChanged(object sender, EventArgs e)
@@ -252,9 +280,7 @@ namespace RandomPixelImage
         private void ChooseCustomBackgroundType()
         {
             BackgroundType.SelectedIndex = BackgroundType.FindString("Custom");
-            IsCustom = true;
-            IsPixel = false;
-            IsGradient = false;
+            mode = GenerationMode.Custom;
             BackgroundType.Refresh();
         }
 
@@ -277,6 +303,7 @@ namespace RandomPixelImage
 
         public void GenerateCustom()
         {
+            
             Generate(Convert.ToInt32(TxtHeight.Text), Convert.ToInt32(TxtWidth.Text));
         }
 
@@ -287,6 +314,7 @@ namespace RandomPixelImage
                 /// The values used to generate the random pixel in the generating process
                 
                 Bmp = new Bitmap(ImageWidth, ImageHeight);
+
                 //Here we randomly generate a pixel for each column in the rows of the image
                 for (int x = 0; x < ImageWidth; x++)
                 {
@@ -302,14 +330,7 @@ namespace RandomPixelImage
                 }
                 ImageInfoLbl.Text = $"Image Width: {Bmp.Width} Height: {Bmp.Height}";
 
-                //Bmp = (Bitmap)ResizeImage(Bmp, new Size(720, 720));
-                  //      Graphics g = Graphics.FromImage(Bmp);
-                        //g.DrawEllipse(new Pen(nsb,50),0, 0, Rand.Next(ImageWidth -1), Rand.Next(ImageHeight - 1));
-                //for (int i = 0; i < 100; i++)
-                //{
-                //    SolidBrush nsb = new SolidBrush(Color.FromArgb(255,Rand.Next(255), Rand.Next(255), Rand.Next(255)));
-                //    g.DrawLine(new Pen(nsb, 5), 0, 0, (float)Math.Cos(i*50)*100, -1 * (float)Math.Sin(i*50)*100);
-                //}
+
 
                 PreviewBox.BackgroundImage = Bmp;
                 ImageInfoLbl.Text = $"Image Width: {PreviewBox.BackgroundImage.Width} Height: {PreviewBox.BackgroundImage.Height}";
@@ -329,22 +350,22 @@ namespace RandomPixelImage
             //MessageBox.Show(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
             if (IsGenerated)
                 PreviewBox.BackgroundImage.Dispose();
-            if (IsCustom && TxtHeight.Text != "" && TxtWidth.Text != "")
+            if ((mode == GenerationMode.Custom) && TxtHeight.Text != "" && TxtWidth.Text != "")
             {
                 GenerateCustom();
                 return;
             }
-            else if (IsCustom)
+            else if (mode == GenerationMode.Custom)
             {
-                MessageBox.Show("Please enter some custome inputs first", "Notice");
+                MessageBox.Show("Please enter some custom height/width first", "Operation Cancelled");
                 return;
             }
-            if (IsPixel)
+            if (mode == GenerationMode.Pixel)
             {
                 GeneratePixel();
                 return;
             }
-            if (IsGradient)
+            if (mode == GenerationMode.Gradient)
             {
                 GenerateGradient();
                 return;
@@ -415,22 +436,16 @@ namespace RandomPixelImage
             switch (BackgroundType.SelectedItem.ToString())
             {
                 case "Gradient":
-                    IsGradient = true;
-                    IsPixel = false;
-                    IsCustom = false;
+                    mode = GenerationMode.Gradient;
                     TxtHeight.Text = "";
                     TxtWidth.Text = "";
                     LayoutType.SelectedItem = "Zoom";
                     break;
                 case "Pixel":
-                    IsPixel = true;
-                    IsGradient = false;
-                    IsCustom = false;
+                    mode = GenerationMode.Pixel;
                     break;
                 case "Custom":
-                    IsCustom = true;
-                    IsPixel = false;
-                    IsGradient = false;
+                    mode = GenerationMode.Custom;
                     break;
                 default:
                     break;
@@ -608,6 +623,88 @@ namespace RandomPixelImage
         private void panel2_MouseUp(object sender, MouseEventArgs e)
         {
             LeftResizeMouseDown = false;
+        }
+
+        private void THeight_MouseUp(object sender, MouseEventArgs e)
+        {
+            UpdateSaveRuntime(TWidth.Value, THeight.Value);
+        }
+
+        private void TWidth_MouseUp(object sender, MouseEventArgs e)
+        {
+            UpdateSaveRuntime(TWidth.Value, THeight.Value);
+        }
+
+        private void TxtHeight_Leave(object sender, EventArgs e)
+        {
+            if (TxtHeight.Text.Trim() != string.Empty)
+            {
+                if (ValidateNumericInput(TxtHeight.Text, 0, 0) == -1)
+                {
+                    TxtHeight.Text = string.Empty;
+                    TxtHeight.Focus();
+                }
+            }
+        }
+
+        private void TxtWidth_Leave(object sender, EventArgs e)
+        {
+            if (TxtWidth.Text.Trim() != string.Empty)
+            {
+                if (ValidateNumericInput(TxtWidth.Text, 0, 0) == -1)
+                {
+                    TxtWidth.Text = string.Empty;
+                    TxtWidth.Focus();
+                }
+            }
+        }
+
+        private void TxtA_Leave(object sender, EventArgs e)
+        {
+            if (TxtA.Text.Trim() != string.Empty)
+            {
+                if (ValidateNumericInput(TxtA.Text, 1, 255) == -1)
+                {
+                    TxtA.Text = string.Empty;
+                    TxtA.Focus();
+                }
+            }
+        }
+
+        private void TxtR_Leave(object sender, EventArgs e)
+        {
+            if (TxtR.Text.Trim() != string.Empty)
+            {
+                if (ValidateNumericInput(TxtR.Text, 1, 255) == -1)
+                {
+                    TxtR.Text = string.Empty;
+                    TxtR.Focus();
+                }
+            }
+        }
+
+        private void TxtG_Leave(object sender, EventArgs e)
+        {
+            if (TxtG.Text.Trim() != string.Empty)
+            {
+                if (ValidateNumericInput(TxtG.Text, 1, 255) == -1)
+                {
+                    TxtG.Text = string.Empty;
+                    TxtG.Focus();
+                }
+            }
+        }
+
+        private void TxtB_Leave(object sender, EventArgs e)
+        {
+            if (TxtB.Text.Trim() != string.Empty)
+            {
+                if (ValidateNumericInput(TxtB.Text, 1, 255) == -1)
+                {
+                    TxtB.Text = string.Empty;
+                    TxtB.Focus();
+                }
+            }
         }
     }
 }
