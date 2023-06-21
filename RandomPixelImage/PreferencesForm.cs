@@ -57,40 +57,30 @@ namespace RandomPixelImage
         private void DarkBtn_Click(object sender, EventArgs e)
         {
             FormManager1.ChangeTheme(Preferences.Themes.Dark);
+            FormMain.Invalidate();
         }
 
         private void BlueBtn_Click(object sender, EventArgs e)
         {
             FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Blue);
-            WindowState = FormWindowState.Minimized;
-            WindowState = FormWindowState.Normal;
-            FormWindowState FWS = FormMain.WindowState;
-            FormMain.WindowState = FormWindowState.Minimized;
-            FormMain.WindowState = FWS;
+            FormMain.Invalidate();
         }
 
         private void RedBtn_Click(object sender, EventArgs e)
         {
             FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Red);
-            WindowState = FormWindowState.Minimized;
-            WindowState = FormWindowState.Normal;
-            FormWindowState FWS = FormMain.WindowState;
-            FormMain.WindowState = FormWindowState.Minimized;
-            FormMain.WindowState = FWS;
+            FormMain.Invalidate();
         }
 
         private void PinkBtn_Click(object sender, EventArgs e)
         {
             FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Pink);
-            WindowState = FormWindowState.Minimized;
-            WindowState = FormWindowState.Normal;
-            FormWindowState FWS = FormMain.WindowState;
-            FormMain.WindowState = FormWindowState.Minimized;
-            FormMain.WindowState = FWS;
+            FormMain.Invalidate();
         }
 
         private void OkBtn_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.OK;
             Close();
         }
 
@@ -98,11 +88,7 @@ namespace RandomPixelImage
         {
             FormManager1.ChangeTheme(Preferences.Themes.Light);
             FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Blue);
-            WindowState = FormWindowState.Minimized;
-            WindowState = FormWindowState.Normal;
-            FormWindowState FWS = FormMain.WindowState;
-            FormMain.WindowState = FormWindowState.Minimized;
-            FormMain.WindowState = FWS;
+ 
         }
     }
 }

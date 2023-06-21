@@ -9,8 +9,8 @@ namespace RandomPixelImage
         /// <summary>
         /// The directory in which the application data is saved in
         /// </summary>
-        static string ApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + Application.CompanyName;
-        static string PreferencesFile = ApplicationData + "\\Preferences.xml";
+        static readonly string ApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + Application.CompanyName;
+        static readonly string PreferencesFile = ApplicationData + "\\Preferences.xml";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

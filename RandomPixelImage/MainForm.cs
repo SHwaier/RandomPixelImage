@@ -27,7 +27,7 @@ namespace RandomPixelImage
         /// </summary>
         private bool IsCustom;
 
-        private bool IsSizeChanging = false;
+        private readonly bool IsSizeChanging = false;
 
         /// <summary>
         /// Rand is used to generate random numbers
@@ -56,7 +56,7 @@ namespace RandomPixelImage
         Preferences FormPreferences = new Preferences();
         private static readonly string ApplicationData = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{Application.CompanyName}";
         private static readonly string PreferencesFile = $"{ApplicationData}\\Preferences.xml";
-        FormManager FormManager1;
+        readonly FormManager FormManager1;
 
         public MainForm(Preferences FormPreferences1)
         {
@@ -68,7 +68,7 @@ namespace RandomPixelImage
         private void MainForm_Load(object sender, EventArgs e)
         {
             int FormHeight = Height - 62;
-            save.Size = new Size(Width, FormHeight);
+            SavePanel.Size = new Size(Width, FormHeight);
             EditPanel.Size = new Size(Width, FormHeight);
             BasicPanel.Visible = false;
             AdvancedPanel.Visible = false;
@@ -79,13 +79,13 @@ namespace RandomPixelImage
         private void MainForm_Resize(object sender, EventArgs e)
         {
             int FormHeight = Height - 62;
-            save.Size = new Size(Width, FormHeight);
+            SavePanel.Size = new Size(Width, FormHeight);
             EditPanel.Size = new Size(Width, FormHeight);
         }
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
-            save.Size = new Size(Width, Height - 62);
+            SavePanel.Size = new Size(Width, Height - 62);
             EditPanel.Size = new Size(Width, Height - 62);
         }
 
@@ -130,11 +130,11 @@ namespace RandomPixelImage
         private void UpdateSaveRuntime(int _Width, int _Height)
         {
             if (IsSizeChanging)
-                RuntimePicSave.BackgroundImage.Dispose();
+                RuntimePicSave.BackgroundImage = null;
             Image img = PreviewBox.BackgroundImage;
             Size size = new Size(_Width, _Height);
             img = ResizeImage(img, size);
-            RuntimePicSave.BackgroundImage = img;
+            RuntimePicSave.BackgroundImage = img;            
         }
 
         private void Generate_KeyPress(object sender, KeyPressEventArgs e)
@@ -171,8 +171,8 @@ namespace RandomPixelImage
                 sv.Dispose();
                 SavingMsg.Close();
                 SavingMsg.Dispose();
-                save.Visible = false;
-                save.SendToBack();
+                SavePanel.Visible = false;
+                SavePanel.SendToBack();
                 RuntimePicSave.Dispose();
             }
             catch (Exception x)
@@ -260,11 +260,9 @@ namespace RandomPixelImage
 
         private void Cancel_Click(object sender, EventArgs e)
         {
-            save.Visible = false;
-            RuntimePicSave.BackgroundImage.Dispose();
+            SavePanel.Visible = false;
+            RuntimePicSave.BackgroundImage = null;
             EditPanel.BringToFront();
-            Dispose();
-            InitializeComponent();
         }
 
         public void GeneratePixel()
@@ -302,19 +300,23 @@ namespace RandomPixelImage
 
                     }
                 }
-                //ImageInfoLbl.Text = $"Image Width: {Bmp.Width} Height: {Bmp.Height}";
+                ImageInfoLbl.Text = $"Image Width: {Bmp.Width} Height: {Bmp.Height}";
 
-                Bmp = (Bitmap)ResizeImage(Bmp, new Size(720, 720));
-                        Graphics g = Graphics.FromImage(Bmp);
-                        SolidBrush nsb = new SolidBrush(Color.Red);
-                        g.DrawEllipse(new Pen(nsb,50),0, 0, Rand.Next(ImageWidth -1), Rand.Next(ImageHeight - 1));
-                g.DrawEllipse(new Pen(nsb, 50), 0, 0, 720 , 720);
+                //Bmp = (Bitmap)ResizeImage(Bmp, new Size(720, 720));
+                  //      Graphics g = Graphics.FromImage(Bmp);
+                        //g.DrawEllipse(new Pen(nsb,50),0, 0, Rand.Next(ImageWidth -1), Rand.Next(ImageHeight - 1));
+                //for (int i = 0; i < 100; i++)
+                //{
+                //    SolidBrush nsb = new SolidBrush(Color.FromArgb(255,Rand.Next(255), Rand.Next(255), Rand.Next(255)));
+                //    g.DrawLine(new Pen(nsb, 5), 0, 0, (float)Math.Cos(i*50)*100, -1 * (float)Math.Sin(i*50)*100);
+                //}
 
                 PreviewBox.BackgroundImage = Bmp;
                 ImageInfoLbl.Text = $"Image Width: {PreviewBox.BackgroundImage.Width} Height: {PreviewBox.BackgroundImage.Height}";
 
-
+                
                 Activate();
+                IsGenerated = true;
             }
             catch (Exception ex)
             {
@@ -356,7 +358,7 @@ namespace RandomPixelImage
                 THeight.Value = PreviewBox.BackgroundImage.Height;
                 TWidth.Value = PreviewBox.BackgroundImage.Width;
                 UpdateSaveRuntime(TWidth.Value, THeight.Value);
-                save.Visible = true;
+                SavePanel.Visible = true;
                 EditPanel.SendToBack();
             }
             else
@@ -533,7 +535,7 @@ namespace RandomPixelImage
         {
             if (IsRightSizeGripDown)
             {
-                Width = Cursor.Position.X - Left;
+                this.Width = Width + Cursor.Position.X;
                 Application.DoEvents();
             }
         }
@@ -552,9 +554,60 @@ namespace RandomPixelImage
         {
             if (IsLeftSizeGripDown)
             {
-                //   this.Width = Cursor.Position.X + this.Right;
+                this.Location = new Point(Cursor.Position.X,this.Location.Y);
+                this.Width = Cursor.Position.X + this.Width;
                 Application.DoEvents();
             }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GenerateBtn.PerformClick();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StartSaveBtn.PerformClick();
+        }
+
+        private void toolsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PreferencesForm PF = new PreferencesForm(FormPreferences, this);
+            if (PF.ShowDialog() == DialogResult.OK)
+            {
+                FormPreferences = Preferences.Load(PreferencesFile);
+                FormManager1.ChangeColorScheme(FormPreferences.ColorScheme);
+                FormManager1.ChangeTheme(FormPreferences.Theme);
+            }
+        }
+        bool LeftResizeMouseDown;
+        private void panel2_MouseDown(object sender, MouseEventArgs e)
+        {
+            LeftResizeMouseDown = true;
+        }
+
+        private void panel2_MouseMove(object sender, MouseEventArgs e)
+        {
+            while (LeftResizeMouseDown)
+            {
+                this.Width = e.X - this.Right;
+                Application.DoEvents();
+            }
+        }
+
+        private void panel2_MouseUp(object sender, MouseEventArgs e)
+        {
+            LeftResizeMouseDown = false;
         }
     }
 }
