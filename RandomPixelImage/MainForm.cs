@@ -137,7 +137,9 @@ namespace RandomPixelImage
         }
 
         /// <summary>
-        /// Validates the user input and makes sure that the input is a numeric input between 1-255. Will return -1 if invalid input, -2 if input is empty, andotherwise valid input will be returned.
+        /// Validates the user input and makes sure that the input is a numeric input between 1-255. 
+        /// Set second and third parameters (a and b) to 0 if no range is needed
+        /// Will return -1 if invalid input, -2 if input is empty, otherwise valid input will be returned.
         /// </summary>
         /// <param name="input">string input. The input the user enters, and will be validated</param>
         /// <param name="a">int start range. User input will be evaluated based on this start range</param>
@@ -159,11 +161,9 @@ namespace RandomPixelImage
 
                 return value;
             }
-            else
-            {
-                MessageBox.Show("The input you provided is invalid, please enter an integer number, between 1-255!", "Invalid Input");
-                return -1;
-            }
+            MessageBox.Show("The input you provided is invalid, please enter an integer number, between 1-255!", "Invalid Input");
+            return -1;
+            
         }
 
         private void Generate_KeyPress(object sender, KeyPressEventArgs e)
@@ -516,25 +516,6 @@ namespace RandomPixelImage
             }
         }
 
-        private void TxtG_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TxtR_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TxtB_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
         private bool IsRightSizeGripDown;
         private void RightSizeGrip_MouseDown(object sender, MouseEventArgs e)
         {
