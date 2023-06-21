@@ -288,7 +288,6 @@ namespace RandomPixelImage
             {
                 /// The values used to generate the random pixel in the generating process
                 
-                IsGenerated = true;
                 Bmp = new Bitmap(ImageWidth, ImageHeight);
                 //Here we randomly generate a pixel for each column in the rows of the image
                 for (int x = 0; x < ImageWidth; x++)
