@@ -12,7 +12,7 @@ namespace RandomPixelImage
         }
         public void Progress(int Progress)
         {
-            Value = Progress;
+            Value += Progress;
             double ProgressPercentage = Progress / 100;
             ProgressPanel.Width = (int)(ProgressPercentage * ProgressBarContainer.Width);
         }
