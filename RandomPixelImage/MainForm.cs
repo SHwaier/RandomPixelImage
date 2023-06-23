@@ -19,6 +19,13 @@ namespace RandomPixelImage
         Gradient,
         Custom
         }
+        struct Preset
+        {
+            ushort Alpha;
+            ushort Red;
+            ushort Green;
+            ushort Blue;
+        }
         /// <summary>
         /// specifies the mode the algrothim is going to use to generate the image.
         /// </summary>
@@ -311,6 +318,9 @@ namespace RandomPixelImage
         {
             try
             {
+               
+
+
                 /// The values used to generate the random pixel in the generating process
                 
                 Bmp = new Bitmap(ImageWidth, ImageHeight);
