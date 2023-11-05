@@ -53,7 +53,7 @@ namespace RandomPixelImage
         Preferences FormPreferences = new Preferences();
         private static readonly string ApplicationData = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{Application.CompanyName}";
         private static readonly string PreferencesFile = $"{ApplicationData}\\Preferences.xml";
-        FormManager FormManager1;
+        readonly FormManager FormManager1;
 
         //public MainForm(Preferences FormPreferences1)
         public MainForm()
@@ -78,13 +78,13 @@ namespace RandomPixelImage
         private void MainForm_Resize(object sender, EventArgs e)
         {
             int FormHeight = Height - 62;
-            save.Size = new Size(Width, FormHeight);
+            SavePanel.Size = new Size(Width, FormHeight);
             EditPanel.Size = new Size(Width, FormHeight);
         }
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
-            save.Size = new Size(Width, Height - 62);
+            SavePanel.Size = new Size(Width, Height - 62);
             EditPanel.Size = new Size(Width, Height - 62);
         }
         
@@ -120,11 +120,41 @@ namespace RandomPixelImage
         private void UpdateSaveRuntime(int _Width, int _Height)
         {
             if (IsSizeChanging)
-                RuntimePicSave.BackgroundImage.Dispose();
+                RuntimePicSave.BackgroundImage = null;
             Image img = PreviewBox.BackgroundImage;
             Size size = new Size(_Width, _Height);
             img = ResizeImage(img, size);
             RuntimePicSave.BackgroundImage = img;
+        }
+
+        /// <summary>
+        /// Validates the user input and makes sure that the input is a numeric input between 1-255. 
+        /// Set second and third parameters (a and b) to 0 if no range is needed
+        /// Will return -1 if invalid input, -2 if input is empty, otherwise valid input will be returned.
+        /// </summary>
+        /// <param name="input">string input. The input the user enters, and will be validated</param>
+        /// <param name="a">int start range. User input will be evaluated based on this start range</param>
+        /// <param name="b">int end range. User input will be evaluated based on this end range</param>
+        /// <returns></returns>
+        public int ValidateNumericInput(string input, int a, int b)
+        {
+            int value = 0;
+            if (a == 0 && b == 0)
+            {
+                if (int.TryParse(input, out value))
+                {
+
+                    return value;
+                }
+            }
+            if (int.TryParse(input, out value) && value >= a && value <= b)
+            {
+
+                return value;
+            }
+            MessageBox.Show("The input you provided is invalid, please enter an integer number, between 1-255!", "Invalid Input");
+            return -1;
+            
         }
 
         private void Generate_KeyPress(object sender, KeyPressEventArgs e)
@@ -155,10 +185,13 @@ namespace RandomPixelImage
                 {
                     SaveImage(img, sv.FileName);
                 }
+
                 img.Dispose();
                 sv.Dispose();
-                save.Visible = false;
-                save.SendToBack();
+                SavingMsg.Close();
+                SavingMsg.Dispose();
+                SavePanel.Visible = false;
+                SavePanel.SendToBack();
                 RuntimePicSave.Dispose();
             }
             catch (Exception x)
@@ -196,13 +229,11 @@ namespace RandomPixelImage
         private void TWidth_ValueChanged(object sender, EventArgs e)
         {
             TxtSaveWidth.Text = TWidth.Value + "px";
-            UpdateSaveRuntime(TWidth.Value, THeight.Value);
         }
 
         private void THeight_Scroll(object sender, EventArgs e)
         {
             TxtSaveHeight.Text = THeight.Value + "px";
-            UpdateSaveRuntime(TWidth.Value, THeight.Value);
         }
 
         private void TQuality_ValueChanged(object sender, EventArgs e)
@@ -239,11 +270,9 @@ namespace RandomPixelImage
 
         private void Cancel_Click(object sender, EventArgs e)
         {
-            save.Visible = false;
-            RuntimePicSave.BackgroundImage.Dispose();
+            SavePanel.Visible = false;
+            RuntimePicSave.BackgroundImage = null;
             EditPanel.BringToFront();
-            Dispose();
-            InitializeComponent();
         }
 
         public void GeneratePixel()
@@ -258,6 +287,7 @@ namespace RandomPixelImage
 
         public void GenerateCustom()
         {
+            
             Generate(Convert.ToInt32(TxtHeight.Text), Convert.ToInt32(TxtWidth.Text));
         }
 
@@ -265,10 +295,15 @@ namespace RandomPixelImage
         {
             try
             {
+               
+
+
                 /// The values used to generate the random pixel in the generating process
 
                 IsGenerated = true;
+                
                 Bmp = new Bitmap(ImageWidth, ImageHeight);
+
                 //Here we randomly generate a pixel for each column in the rows of the image
                 for (int x = 0; x < ImageWidth; x++)
                 {
@@ -284,7 +319,9 @@ namespace RandomPixelImage
                 }
 
                 PreviewBox.BackgroundImage = Bmp;
+                
                 Activate();
+                IsGenerated = true;
             }
             catch (Exception ex)
             {
@@ -325,7 +362,7 @@ namespace RandomPixelImage
                 THeight.Value = PreviewBox.BackgroundImage.Height;
                 TWidth.Value = PreviewBox.BackgroundImage.Width;
                 UpdateSaveRuntime(TWidth.Value, THeight.Value);
-                save.Visible = true;
+                SavePanel.Visible = true;
                 EditPanel.SendToBack();
             }
             else
@@ -481,7 +518,7 @@ namespace RandomPixelImage
         {
             if (IsRightSizeGripDown)
             {
-                Width = Cursor.Position.X - Left;
+                this.Width = Width + Cursor.Position.X;
                 Application.DoEvents();
             }
         }
