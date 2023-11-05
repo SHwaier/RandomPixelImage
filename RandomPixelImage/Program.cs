@@ -17,12 +17,10 @@ namespace RandomPixelImage
         [STAThread]
         static void Main()
         {
-            Setup();
+            //Setup();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(Preferences.Load(PreferencesFile)));
-            //Application.Run(new DrawingForm());
-            //Application.Run(new PreferencesForm(Preferences.Load(PreferencesFile)));
+            Application.Run(new MainForm());
         }
         public static void Setup()
         {

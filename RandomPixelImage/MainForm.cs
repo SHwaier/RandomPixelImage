@@ -14,19 +14,17 @@ namespace RandomPixelImage
         /// Tells if there is an image generated.
         /// </summary>
         public bool IsGenerated;
+        
         /// <summary>
-        /// Specifies That the generated image should be a pizel image
+        /// Specifies what type of generation should be performed
         /// </summary>
-        private bool IsPixel;
-        /// <summary>
-        /// Specifies That the generated image should be a gradient image
-        /// </summary>
-        private bool IsGradient;
-        /// <summary>
-        /// Specifies That the generated image is a custom image with custom height and width
-        /// </summary>
-        private bool IsCustom;
-
+        private enum GenerationMode
+        {
+            Pixel,
+            Gradient,
+            Custom
+        };
+        GenerationMode Mode;
         private bool IsSizeChanging = false;
 
         /// <summary>
@@ -42,7 +40,6 @@ namespace RandomPixelImage
         /// <summary>
         /// A Windows Form to show the saving progress of the image
         /// </summary>
-        SavingMessage SavingMsg = new SavingMessage();
 
         const int CS_DropSHADOW = 0x20000;
         const int GCL_STYLE = (-26);
@@ -58,18 +55,20 @@ namespace RandomPixelImage
         private static readonly string PreferencesFile = $"{ApplicationData}\\Preferences.xml";
         FormManager FormManager1;
 
-        public MainForm(Preferences FormPreferences1)
+        //public MainForm(Preferences FormPreferences1)
+        public MainForm()
         {
             InitializeComponent();
             SetClassLong(Handle, GCL_STYLE, GetClassLong(Handle, GCL_STYLE) | CS_DropSHADOW);
-            FormPreferences = FormPreferences1;
+            //FormPreferences = FormPreferences1;
             FormManager1 = new FormManager(this, FormPreferences);
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
             int FormHeight = Height - 62;
             save.Size = new Size(Width, FormHeight);
-            EditPanel.Size = new Size(Width, FormHeight);
+            EditPanel.Size = new Size(Width, FormHeight);   
             BasicPanel.Visible = false;
             AdvancedPanel.Visible = false;
             SizePanel.Visible = false;
@@ -88,6 +87,7 @@ namespace RandomPixelImage
             save.Size = new Size(Width, Height - 62);
             EditPanel.Size = new Size(Width, Height - 62);
         }
+        
 
         /// <summary>
         /// This is used to resize the an image with almost no loss of image quality
@@ -97,34 +97,24 @@ namespace RandomPixelImage
         /// <returns>This returns the same given image, but with the new size</returns>
         private Image ResizeImage(Image img, Size size)
         {
-            try
+
+            Image NewImage = new Bitmap(img, size.Width, size.Height);
+            using (Graphics GFX = Graphics.FromImage((Bitmap)NewImage))
             {
-                Image NewImage = new Bitmap(img, size.Width, size.Height);
-                ChangeSavingProgress(20, true);
-                using (Graphics GFX = Graphics.FromImage((Bitmap)NewImage))
-                {
-                    ChangeSavingProgress(20, true);
-                    GFX.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    GFX.SmoothingMode = SmoothingMode.HighQuality;
-                    GFX.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    GFX.CompositingQuality = CompositingQuality.HighQuality;
-                    ChangeSavingProgress(20, true);
-                    GFX.DrawImage(img, new Rectangle(Point.Empty, size));
-                    ChangeSavingProgress(20, true);
-                    GFX.Dispose();
-                    return NewImage;
-                }
+                GFX.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                GFX.SmoothingMode = SmoothingMode.HighQuality;
+                GFX.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                GFX.CompositingQuality = CompositingQuality.HighQuality;
+                GFX.DrawImage(img, new Rectangle(Point.Empty, size));
+                GFX.Dispose();
+                return NewImage;
             }
-            catch (Exception x)
-            {
-                MessageBox.Show(x.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
-            }
+
         }
-        private void ChangeSavingProgress(int IncreaseBy, bool IsSave)
+        private void ChageSavingProgress(int IncreaseBy, bool IsSave)
         {
-            if (IsSave)
-                SavingMsg.Progress(SavingMsg.Value + IncreaseBy);
+            //if (IsSave)
+                //SavingMsg.Progress(SavingMsg.Value + IncreaseBy);
         }
 
         private void UpdateSaveRuntime(int _Width, int _Height)
@@ -156,21 +146,17 @@ namespace RandomPixelImage
                     Title = "Saving...",
                     AddExtension = true
                 };
-                //A message box to show that the image is being saved
-                SavingMsg = new SavingMessage();
-                SavingMsg.Show();
-                SavingMsg.Value = 0;
-                //The size used to resize the final image 
+                
+
                 Size size = new Size(TWidth.Value, THeight.Value);
                 img = ResizeImage(RuntimePicSave.BackgroundImage, size);
+
                 if (sv.ShowDialog() == DialogResult.OK)
                 {
                     SaveImage(img, sv.FileName);
                 }
                 img.Dispose();
                 sv.Dispose();
-                SavingMsg.Close();
-                SavingMsg.Dispose();
                 save.Visible = false;
                 save.SendToBack();
                 RuntimePicSave.Dispose();
@@ -187,14 +173,11 @@ namespace RandomPixelImage
             {
                 Image bm = img;
                 ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
-                ChangeSavingProgress(8, true);
                 ImageCodecInfo ici = null;
                 EncoderParameters ep = new EncoderParameters();
                 ep.Param[0] = new EncoderParameter(Encoder.Quality, (long)TQuality.Value);
-                ChangeSavingProgress(8, true);
                 foreach (ImageCodecInfo codec in codecs)
                 {
-                    ChangeSavingProgress(8, true);
                     if (codec.MimeType == "image/jpeg")
                     {
                         ici = codec;
@@ -202,13 +185,11 @@ namespace RandomPixelImage
                 }
                 bm.Save(SVFileName, ici, ep);
                 ep.Dispose();
-                ChangeSavingProgress(8, true);
                 bm.Dispose();
             }
             else
             {
-                img.Save(SVFileName);//5
-                ChangeSavingProgress(8, true);
+                img.Save(SVFileName);
             }
         }
 
@@ -252,9 +233,7 @@ namespace RandomPixelImage
         private void ChooseCustomBackgroundType()
         {
             BackgroundType.SelectedIndex = BackgroundType.FindString("Custom");
-            IsCustom = true;
-            IsPixel = false;
-            IsGradient = false;
+            Mode = GenerationMode.Custom;
             BackgroundType.Refresh();
         }
 
@@ -287,7 +266,7 @@ namespace RandomPixelImage
             try
             {
                 /// The values used to generate the random pixel in the generating process
-                
+
                 IsGenerated = true;
                 Bmp = new Bitmap(ImageWidth, ImageHeight);
                 //Here we randomly generate a pixel for each column in the rows of the image
@@ -303,18 +282,8 @@ namespace RandomPixelImage
 
                     }
                 }
-                //ImageInfoLbl.Text = $"Image Width: {Bmp.Width} Height: {Bmp.Height}";
-
-                Bmp = (Bitmap)ResizeImage(Bmp, new Size(720, 720));
-                        Graphics g = Graphics.FromImage(Bmp);
-                        SolidBrush nsb = new SolidBrush(Color.Red);
-                        g.DrawEllipse(new Pen(nsb,50),0, 0, Rand.Next(ImageWidth -1), Rand.Next(ImageHeight - 1));
-                g.DrawEllipse(new Pen(nsb, 50), 0, 0, 720 , 720);
 
                 PreviewBox.BackgroundImage = Bmp;
-                ImageInfoLbl.Text = $"Image Width: {PreviewBox.BackgroundImage.Width} Height: {PreviewBox.BackgroundImage.Height}";
-
-
                 Activate();
             }
             catch (Exception ex)
@@ -328,25 +297,24 @@ namespace RandomPixelImage
             //MessageBox.Show(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
             if (IsGenerated)
                 PreviewBox.BackgroundImage.Dispose();
-            if (IsCustom && TxtHeight.Text != "" && TxtWidth.Text != "")
+            if (Mode == GenerationMode.Custom && TxtHeight.Text != "" && TxtWidth.Text != "")
             {
                 GenerateCustom();
                 return;
             }
-            else if (IsCustom)
+            switch (Mode)
             {
-                MessageBox.Show("Please enter some custome inputs first", "Notice");
-                return;
-            }
-            if (IsPixel)
-            {
+                case GenerationMode.Pixel:
                 GeneratePixel();
-                return;
-            }
-            if (IsGradient)
-            {
+                    break;
+                case GenerationMode.Gradient:
                 GenerateGradient();
-                return;
+                    break;
+                case GenerationMode.Custom:
+                MessageBox.Show("Please enter some custom inputs first", "Notice");
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -414,22 +382,16 @@ namespace RandomPixelImage
             switch (BackgroundType.SelectedItem.ToString())
             {
                 case "Gradient":
-                    IsGradient = true;
-                    IsPixel = false;
-                    IsCustom = false;
+                    Mode = GenerationMode.Gradient;
                     TxtHeight.Text = "";
                     TxtWidth.Text = "";
                     LayoutType.SelectedItem = "Zoom";
                     break;
                 case "Pixel":
-                    IsPixel = true;
-                    IsGradient = false;
-                    IsCustom = false;
+                    Mode = GenerationMode.Pixel;
                     break;
                 case "Custom":
-                    IsCustom = true;
-                    IsPixel = false;
-                    IsGradient = false;
+                    Mode = GenerationMode.Custom;
                     break;
                 default:
                     break;
@@ -495,24 +457,9 @@ namespace RandomPixelImage
                     TxtG.Text = "255";
                     Random rnd = new Random();
 
-                    TxtB.Text = (rnd.Next(25,155)).ToString();
+                    TxtB.Text = (rnd.Next(25, 155)).ToString();
                     break;
             }
-        }
-
-        private void TxtG_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TxtR_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TxtB_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
@@ -553,9 +500,13 @@ namespace RandomPixelImage
         {
             if (IsLeftSizeGripDown)
             {
-                //   this.Width = Cursor.Position.X + this.Right;
-                Application.DoEvents();
+                this.Width = Cursor.Position.X + this.Left;
             }
+        }
+
+        private void PreviewBox_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

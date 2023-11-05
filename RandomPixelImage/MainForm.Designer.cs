@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.PreviewBox = new System.Windows.Forms.PictureBox();
             this.save = new System.Windows.Forms.Panel();
             this.SaveOptionsPanel = new System.Windows.Forms.Panel();
             this.RuntimePicSave = new System.Windows.Forms.PictureBox();
@@ -62,10 +61,10 @@
             this.AdvancedPanelMenu = new MaterialSkin.Controls.MaterialButton();
             this.EditPanel = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.PreviewBox = new System.Windows.Forms.PictureBox();
             this.GenerateBtn = new MaterialSkin.Controls.MaterialButton();
             this.StartSaveBtn = new MaterialSkin.Controls.MaterialButton();
             this.MenuPanel = new System.Windows.Forms.Panel();
-            this.ImageInfoLbl = new MaterialSkin.Controls.MaterialLabel();
             this.BasicPanel = new System.Windows.Forms.Panel();
             this.ThemeType = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
@@ -85,7 +84,6 @@
             this.LeftSizeGrip = new System.Windows.Forms.Panel();
             this.MainContextStrip = new MaterialSkin.Controls.MaterialContextMenuStrip();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
             this.save.SuspendLayout();
             this.SaveOptionsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RuntimePicSave)).BeginInit();
@@ -96,26 +94,13 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
             this.MenuPanel.SuspendLayout();
             this.BasicPanel.SuspendLayout();
             this.SizePanel.SuspendLayout();
             this.RightSizeGrip.SuspendLayout();
             this.MainContextStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // PreviewBox
-            // 
-            this.PreviewBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.PreviewBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.PreviewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PreviewBox.InitialImage = null;
-            this.PreviewBox.Location = new System.Drawing.Point(0, 0);
-            this.PreviewBox.Margin = new System.Windows.Forms.Padding(9, 900, 9, 9);
-            this.PreviewBox.Name = "PreviewBox";
-            this.PreviewBox.Size = new System.Drawing.Size(847, 553);
-            this.PreviewBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PreviewBox.TabIndex = 0;
-            this.PreviewBox.TabStop = false;
             // 
             // save
             // 
@@ -220,7 +205,7 @@
             this.SaveBtn.DrawShadows = true;
             this.SaveBtn.HighEmphasis = true;
             this.SaveBtn.Icon = null;
-            this.SaveBtn.Location = new System.Drawing.Point(294, 478);
+            this.SaveBtn.Location = new System.Drawing.Point(294, 477);
             this.SaveBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.SaveBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.SaveBtn.Name = "SaveBtn";
@@ -373,7 +358,7 @@
             this.Cancel.ForeColor = System.Drawing.Color.DarkRed;
             this.Cancel.HighEmphasis = true;
             this.Cancel.Icon = null;
-            this.Cancel.Location = new System.Drawing.Point(359, 478);
+            this.Cancel.Location = new System.Drawing.Point(360, 477);
             this.Cancel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Cancel.MouseState = MaterialSkin.MouseState.HOVER;
             this.Cancel.Name = "Cancel";
@@ -427,7 +412,7 @@
             this.AdvancedPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.AdvancedPanel.Location = new System.Drawing.Point(0, 335);
             this.AdvancedPanel.Name = "AdvancedPanel";
-            this.AdvancedPanel.Size = new System.Drawing.Size(239, 241);
+            this.AdvancedPanel.Size = new System.Drawing.Size(237, 241);
             this.AdvancedPanel.TabIndex = 62;
             // 
             // materialDivider3
@@ -439,7 +424,7 @@
             this.materialDivider3.Location = new System.Drawing.Point(10, 235);
             this.materialDivider3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialDivider3.Name = "materialDivider3";
-            this.materialDivider3.Size = new System.Drawing.Size(217, 3);
+            this.materialDivider3.Size = new System.Drawing.Size(215, 3);
             this.materialDivider3.TabIndex = 60;
             this.materialDivider3.Text = "materialDivider3";
             // 
@@ -467,7 +452,7 @@
             this.TxtB.Depth = 0;
             this.TxtB.Font = new System.Drawing.Font("Roboto", 12F);
             this.TxtB.ForeColor = System.Drawing.Color.Silver;
-            this.TxtB.Location = new System.Drawing.Point(114, 143);
+            this.TxtB.Location = new System.Drawing.Point(112, 143);
             this.TxtB.MaxLength = 3;
             this.TxtB.MouseState = MaterialSkin.MouseState.OUT;
             this.TxtB.Multiline = false;
@@ -476,7 +461,6 @@
             this.TxtB.TabIndex = 52;
             this.TxtB.Text = "";
             this.TxtB.UseTallSize = false;
-            this.TxtB.TextChanged += new System.EventHandler(this.TxtB_TextChanged);
             // 
             // LblBlue
             // 
@@ -501,7 +485,7 @@
             this.TxtA.Depth = 0;
             this.TxtA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.TxtA.ForeColor = System.Drawing.Color.Silver;
-            this.TxtA.Location = new System.Drawing.Point(114, 17);
+            this.TxtA.Location = new System.Drawing.Point(112, 17);
             this.TxtA.MaxLength = 3;
             this.TxtA.MouseState = MaterialSkin.MouseState.OUT;
             this.TxtA.Multiline = false;
@@ -534,7 +518,7 @@
             this.TxtR.Depth = 0;
             this.TxtR.Font = new System.Drawing.Font("Roboto", 12F);
             this.TxtR.ForeColor = System.Drawing.Color.SteelBlue;
-            this.TxtR.Location = new System.Drawing.Point(114, 59);
+            this.TxtR.Location = new System.Drawing.Point(112, 59);
             this.TxtR.MaxLength = 3;
             this.TxtR.MouseState = MaterialSkin.MouseState.OUT;
             this.TxtR.Multiline = false;
@@ -543,7 +527,6 @@
             this.TxtR.TabIndex = 51;
             this.TxtR.Text = "";
             this.TxtR.UseTallSize = false;
-            this.TxtR.TextChanged += new System.EventHandler(this.TxtR_TextChanged);
             // 
             // LblRed
             // 
@@ -568,7 +551,7 @@
             this.TxtG.Depth = 0;
             this.TxtG.Font = new System.Drawing.Font("Roboto", 12F);
             this.TxtG.ForeColor = System.Drawing.Color.Silver;
-            this.TxtG.Location = new System.Drawing.Point(114, 101);
+            this.TxtG.Location = new System.Drawing.Point(112, 101);
             this.TxtG.MaxLength = 3;
             this.TxtG.MouseState = MaterialSkin.MouseState.OUT;
             this.TxtG.Multiline = false;
@@ -577,7 +560,6 @@
             this.TxtG.TabIndex = 49;
             this.TxtG.Text = "";
             this.TxtG.UseTallSize = false;
-            this.TxtG.TextChanged += new System.EventHandler(this.TxtG_TextChanged);
             // 
             // LayoutType
             // 
@@ -609,7 +591,7 @@
             "Center",
             "Strech",
             "Zoom"});
-            this.LayoutType.Location = new System.Drawing.Point(114, 185);
+            this.LayoutType.Location = new System.Drawing.Point(112, 185);
             this.LayoutType.MaxDropDownItems = 4;
             this.LayoutType.MouseState = MaterialSkin.MouseState.OUT;
             this.LayoutType.Name = "LayoutType";
@@ -645,7 +627,7 @@
             this.AdvancedPanelMenu.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.AdvancedPanelMenu.MouseState = MaterialSkin.MouseState.HOVER;
             this.AdvancedPanelMenu.Name = "AdvancedPanelMenu";
-            this.AdvancedPanelMenu.Size = new System.Drawing.Size(239, 36);
+            this.AdvancedPanelMenu.Size = new System.Drawing.Size(237, 36);
             this.AdvancedPanelMenu.TabIndex = 63;
             this.AdvancedPanelMenu.Text = "Advanced";
             this.AdvancedPanelMenu.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
@@ -680,8 +662,23 @@
             this.splitContainer1.Panel2.Controls.Add(this.StartSaveBtn);
             this.splitContainer1.Panel2.Controls.Add(this.MenuPanel);
             this.splitContainer1.Size = new System.Drawing.Size(1115, 553);
-            this.splitContainer1.SplitterDistance = 847;
+            this.splitContainer1.SplitterDistance = 846;
             this.splitContainer1.TabIndex = 62;
+            // 
+            // PreviewBox
+            // 
+            this.PreviewBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.PreviewBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.PreviewBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PreviewBox.InitialImage = null;
+            this.PreviewBox.Location = new System.Drawing.Point(0, 0);
+            this.PreviewBox.Margin = new System.Windows.Forms.Padding(9, 900, 9, 9);
+            this.PreviewBox.Name = "PreviewBox";
+            this.PreviewBox.Size = new System.Drawing.Size(846, 553);
+            this.PreviewBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PreviewBox.TabIndex = 0;
+            this.PreviewBox.TabStop = false;
+            this.PreviewBox.Click += new System.EventHandler(this.PreviewBox_Click);
             // 
             // GenerateBtn
             // 
@@ -691,7 +688,7 @@
             this.GenerateBtn.DrawShadows = true;
             this.GenerateBtn.HighEmphasis = true;
             this.GenerateBtn.Icon = null;
-            this.GenerateBtn.Location = new System.Drawing.Point(149, 502);
+            this.GenerateBtn.Location = new System.Drawing.Point(147, 502);
             this.GenerateBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.GenerateBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.GenerateBtn.Name = "GenerateBtn";
@@ -711,7 +708,7 @@
             this.StartSaveBtn.DrawShadows = true;
             this.StartSaveBtn.HighEmphasis = true;
             this.StartSaveBtn.Icon = null;
-            this.StartSaveBtn.Location = new System.Drawing.Point(86, 502);
+            this.StartSaveBtn.Location = new System.Drawing.Point(84, 502);
             this.StartSaveBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.StartSaveBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.StartSaveBtn.Name = "StartSaveBtn";
@@ -728,7 +725,6 @@
             this.MenuPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MenuPanel.AutoScroll = true;
-            this.MenuPanel.Controls.Add(this.ImageInfoLbl);
             this.MenuPanel.Controls.Add(this.AdvancedPanel);
             this.MenuPanel.Controls.Add(this.AdvancedPanelMenu);
             this.MenuPanel.Controls.Add(this.BasicPanel);
@@ -737,23 +733,8 @@
             this.MenuPanel.Controls.Add(this.SizePanelMenu);
             this.MenuPanel.Location = new System.Drawing.Point(3, 0);
             this.MenuPanel.Name = "MenuPanel";
-            this.MenuPanel.Size = new System.Drawing.Size(256, 433);
+            this.MenuPanel.Size = new System.Drawing.Size(254, 433);
             this.MenuPanel.TabIndex = 48;
-            // 
-            // ImageInfoLbl
-            // 
-            this.ImageInfoLbl.AutoSize = true;
-            this.ImageInfoLbl.Depth = 0;
-            this.ImageInfoLbl.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ImageInfoLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ImageInfoLbl.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.ImageInfoLbl.FontType = MaterialSkin.MaterialSkinManager.fontType.Caption;
-            this.ImageInfoLbl.Location = new System.Drawing.Point(0, 576);
-            this.ImageInfoLbl.MouseState = MaterialSkin.MouseState.HOVER;
-            this.ImageInfoLbl.Name = "ImageInfoLbl";
-            this.ImageInfoLbl.Size = new System.Drawing.Size(115, 14);
-            this.ImageInfoLbl.TabIndex = 59;
-            this.ImageInfoLbl.Text = "Image Width: Height:";
             // 
             // BasicPanel
             // 
@@ -765,7 +746,7 @@
             this.BasicPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.BasicPanel.Location = new System.Drawing.Point(0, 172);
             this.BasicPanel.Name = "BasicPanel";
-            this.BasicPanel.Size = new System.Drawing.Size(239, 127);
+            this.BasicPanel.Size = new System.Drawing.Size(237, 127);
             this.BasicPanel.TabIndex = 0;
             // 
             // ThemeType
@@ -799,7 +780,7 @@
             "Blue",
             "Green",
             "Purple"});
-            this.ThemeType.Location = new System.Drawing.Point(110, 18);
+            this.ThemeType.Location = new System.Drawing.Point(107, 18);
             this.ThemeType.MaxDropDownItems = 4;
             this.ThemeType.MouseState = MaterialSkin.MouseState.OUT;
             this.ThemeType.Name = "ThemeType";
@@ -829,7 +810,7 @@
             this.materialDivider2.Location = new System.Drawing.Point(10, 121);
             this.materialDivider2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialDivider2.Name = "materialDivider2";
-            this.materialDivider2.Size = new System.Drawing.Size(213, 3);
+            this.materialDivider2.Size = new System.Drawing.Size(211, 3);
             this.materialDivider2.TabIndex = 60;
             this.materialDivider2.Text = "materialDivider2";
             // 
@@ -858,7 +839,7 @@
             "Pixel",
             "Gradient",
             "Custom"});
-            this.BackgroundType.Location = new System.Drawing.Point(112, 70);
+            this.BackgroundType.Location = new System.Drawing.Point(110, 70);
             this.BackgroundType.MaxDropDownItems = 4;
             this.BackgroundType.MouseState = MaterialSkin.MouseState.OUT;
             this.BackgroundType.Name = "BackgroundType";
@@ -892,7 +873,7 @@
             this.BasicPanelMenu.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.BasicPanelMenu.MouseState = MaterialSkin.MouseState.HOVER;
             this.BasicPanelMenu.Name = "BasicPanelMenu";
-            this.BasicPanelMenu.Size = new System.Drawing.Size(239, 36);
+            this.BasicPanelMenu.Size = new System.Drawing.Size(237, 36);
             this.BasicPanelMenu.TabIndex = 49;
             this.BasicPanelMenu.Text = "Basic";
             this.BasicPanelMenu.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
@@ -910,7 +891,7 @@
             this.SizePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.SizePanel.Location = new System.Drawing.Point(0, 36);
             this.SizePanel.Name = "SizePanel";
-            this.SizePanel.Size = new System.Drawing.Size(239, 100);
+            this.SizePanel.Size = new System.Drawing.Size(237, 100);
             this.SizePanel.TabIndex = 0;
             // 
             // materialDivider1
@@ -922,7 +903,7 @@
             this.materialDivider1.Location = new System.Drawing.Point(10, 90);
             this.materialDivider1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialDivider1.Name = "materialDivider1";
-            this.materialDivider1.Size = new System.Drawing.Size(213, 3);
+            this.materialDivider1.Size = new System.Drawing.Size(211, 3);
             this.materialDivider1.TabIndex = 59;
             this.materialDivider1.Text = "materialDivider1";
             // 
@@ -935,7 +916,7 @@
             this.TxtHeight.Depth = 0;
             this.TxtHeight.Font = new System.Drawing.Font("Roboto", 12F);
             this.TxtHeight.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.TxtHeight.Location = new System.Drawing.Point(113, 3);
+            this.TxtHeight.Location = new System.Drawing.Point(111, 3);
             this.TxtHeight.MaxLength = 3;
             this.TxtHeight.MouseState = MaterialSkin.MouseState.OUT;
             this.TxtHeight.Multiline = false;
@@ -955,7 +936,7 @@
             this.TxtWidth.Depth = 0;
             this.TxtWidth.Font = new System.Drawing.Font("Roboto", 12F);
             this.TxtWidth.ForeColor = System.Drawing.Color.Silver;
-            this.TxtWidth.Location = new System.Drawing.Point(113, 45);
+            this.TxtWidth.Location = new System.Drawing.Point(111, 45);
             this.TxtWidth.MaxLength = 3;
             this.TxtWidth.MouseState = MaterialSkin.MouseState.OUT;
             this.TxtWidth.Multiline = false;
@@ -1006,7 +987,7 @@
             this.SizePanelMenu.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.SizePanelMenu.MouseState = MaterialSkin.MouseState.HOVER;
             this.SizePanelMenu.Name = "SizePanelMenu";
-            this.SizePanelMenu.Size = new System.Drawing.Size(239, 36);
+            this.SizePanelMenu.Size = new System.Drawing.Size(237, 36);
             this.SizePanelMenu.TabIndex = 46;
             this.SizePanelMenu.Text = "Size";
             this.SizePanelMenu.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
@@ -1055,6 +1036,7 @@
             // 
             this.MainContextStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.MainContextStrip.Depth = 0;
+            this.MainContextStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MainContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.preferencesToolStripMenuItem});
             this.MainContextStrip.MouseState = MaterialSkin.MouseState.HOVER;
@@ -1071,8 +1053,7 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1119, 615);
             this.ContextMenuStrip = this.MainContextStrip;
@@ -1085,7 +1066,6 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).EndInit();
             this.save.ResumeLayout(false);
             this.SaveOptionsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.RuntimePicSave)).EndInit();
@@ -1099,6 +1079,7 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).EndInit();
             this.MenuPanel.ResumeLayout(false);
             this.MenuPanel.PerformLayout();
             this.BasicPanel.ResumeLayout(false);
@@ -1112,8 +1093,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox PreviewBox;
         private System.Windows.Forms.Panel save;
         private System.Windows.Forms.Panel EditPanel;
         private System.Windows.Forms.Label label13;
@@ -1169,6 +1148,6 @@
         private System.Windows.Forms.Panel RightSizeGrip;
         private System.Windows.Forms.Panel LeftSizeGrip;
         private System.Windows.Forms.Panel panel2;
-        private MaterialSkin.Controls.MaterialLabel ImageInfoLbl;
+        private System.Windows.Forms.PictureBox PreviewBox;
     }
 }
