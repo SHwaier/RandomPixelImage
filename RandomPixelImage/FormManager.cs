@@ -32,7 +32,11 @@ namespace RandomPixelImage
         /// </summary>
         private readonly ColorScheme PinkScheme = new ColorScheme(Primary.Pink800, Primary.Pink900,
                 Primary.Pink500, Accent.Red200, TextShade.WHITE);
-
+        /// <summary>
+        /// A monochrome color scheme for Material Skin Manager to change the application look
+        /// </summary>
+        private readonly ColorScheme Monochrome = new ColorScheme(Primary.Grey600, Primary.Grey700,
+                Primary.Grey500, Accent.Teal700, TextShade.WHITE);
         Preferences FormPreferences = new Preferences();
         private static readonly string ApplicationData = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{Application.CompanyName}";
         private static readonly string PreferencesFile = $"{ApplicationData}\\Preferences.xml";
@@ -79,6 +83,11 @@ namespace RandomPixelImage
                 case Preferences.ColorSchemes.Red:
                     FormPreferences.ColorScheme = Preferences.ColorSchemes.Red;
                     Msm.ColorScheme = RedScheme;
+                    SavePrefernces();
+                    break;
+                case Preferences.ColorSchemes.Monochrome:
+                    FormPreferences.ColorScheme = Preferences.ColorSchemes.Monochrome;
+                    Msm.ColorScheme = Monochrome;
                     SavePrefernces();
                     break;
             }

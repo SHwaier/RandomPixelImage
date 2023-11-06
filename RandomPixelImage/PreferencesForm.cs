@@ -58,24 +58,32 @@ namespace RandomPixelImage
         {
             FormManager1.ChangeTheme(Preferences.Themes.Dark);
             FormMain.Invalidate();
+            this.Invalidate();
+
         }
 
         private void BlueBtn_Click(object sender, EventArgs e)
         {
             FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Blue);
             FormMain.Invalidate();
+            this.Invalidate();
+
         }
 
         private void RedBtn_Click(object sender, EventArgs e)
         {
             FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Red);
             FormMain.Invalidate();
+            this.Invalidate();
+
         }
 
         private void PinkBtn_Click(object sender, EventArgs e)
         {
             FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Pink);
             FormMain.Invalidate();
+            this.Invalidate();
+
         }
 
         private void OkBtn_Click(object sender, EventArgs e)
@@ -89,6 +97,23 @@ namespace RandomPixelImage
             FormManager1.ChangeTheme(Preferences.Themes.Light);
             FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Blue);
  
+        }
+
+        private void PreferencesForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void materialButton5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void materialButton5_Click_1(object sender, EventArgs e)
+        {
+            FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Monochrome);
+            FormMain.Invalidate();
+            this.Invalidate();
         }
     }
 }

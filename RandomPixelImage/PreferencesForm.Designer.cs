@@ -50,6 +50,8 @@
             this.RestoreDefaultsBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialButton4 = new MaterialSkin.Controls.MaterialButton();
             this.materialDrawer3 = new MaterialSkin.Controls.MaterialDrawer();
+            this.materialDivider4 = new MaterialSkin.Controls.MaterialDivider();
+            this.materialButton5 = new MaterialSkin.Controls.MaterialButton();
             this.panel1.SuspendLayout();
             this.ColorSchemeTab.SuspendLayout();
             this.ThemeTab.SuspendLayout();
@@ -152,6 +154,8 @@
             // 
             // ColorSchemeTab
             // 
+            this.ColorSchemeTab.Controls.Add(this.materialButton5);
+            this.ColorSchemeTab.Controls.Add(this.materialDivider4);
             this.ColorSchemeTab.Controls.Add(this.PinkBtn);
             this.ColorSchemeTab.Controls.Add(this.materialDivider3);
             this.ColorSchemeTab.Controls.Add(this.RedBtn);
@@ -439,6 +443,37 @@
             this.materialDrawer3.Text = "materialDrawer3";
             this.materialDrawer3.UseColors = false;
             // 
+            // materialDivider4
+            // 
+            this.materialDivider4.BackColor = System.Drawing.Color.White;
+            this.materialDivider4.Depth = 0;
+            this.materialDivider4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.materialDivider4.Location = new System.Drawing.Point(3, 121);
+            this.materialDivider4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialDivider4.Name = "materialDivider4";
+            this.materialDivider4.Size = new System.Drawing.Size(258, 5);
+            this.materialDivider4.TabIndex = 12;
+            // 
+            // materialButton5
+            // 
+            this.materialButton5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton5.Depth = 0;
+            this.materialButton5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.materialButton5.DrawShadows = true;
+            this.materialButton5.HighEmphasis = false;
+            this.materialButton5.Icon = null;
+            this.materialButton5.Location = new System.Drawing.Point(3, 126);
+            this.materialButton5.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton5.Name = "materialButton5";
+            this.materialButton5.Size = new System.Drawing.Size(258, 36);
+            this.materialButton5.TabIndex = 13;
+            this.materialButton5.Text = "Monochrome";
+            this.materialButton5.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
+            this.materialButton5.UseAccentColor = false;
+            this.materialButton5.UseVisualStyleBackColor = true;
+            this.materialButton5.Click += new System.EventHandler(this.materialButton5_Click_1);
+            // 
             // PreferencesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -454,6 +489,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Preferences & Settings";
+            this.Load += new System.EventHandler(this.PreferencesForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ColorSchemeTab.ResumeLayout(false);
@@ -491,5 +527,7 @@
         private MaterialSkin.Controls.MaterialDivider materialDivider3;
         private MaterialSkin.Controls.MaterialButton OkBtn;
         private MaterialSkin.Controls.MaterialButton RestoreDefaultsBtn;
+        private MaterialSkin.Controls.MaterialButton materialButton5;
+        private MaterialSkin.Controls.MaterialDivider materialDivider4;
     }
 }

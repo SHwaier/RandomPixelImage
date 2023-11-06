@@ -10,6 +10,9 @@ namespace RandomPixelImage
 {
     public partial class MainForm : MaterialForm
     {
+
+
+        Point lastMousePosition;
         /// <summary>
         /// Tells if there is an image generated.
         /// </summary>
@@ -62,6 +65,7 @@ namespace RandomPixelImage
             SetClassLong(Handle, GCL_STYLE, GetClassLong(Handle, GCL_STYLE) | CS_DropSHADOW);
             //FormPreferences = FormPreferences1;
             FormManager1 = new FormManager(this, FormPreferences);
+            FormManager1.ChangeColorScheme(Preferences.ColorSchemes.Monochrome);
             this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
         private void MainForm_Load(object sender, EventArgs e)
@@ -110,12 +114,7 @@ namespace RandomPixelImage
                 return NewImage;
             }
 
-        }
-        private void ChageSavingProgress(int IncreaseBy, bool IsSave)
-        {
-            //if (IsSave)
-            //SavingMsg.Progress(SavingMsg.Value + IncreaseBy);
-        }
+        } 
 
         private void UpdateSaveRuntime(int _Width, int _Height)
         {
@@ -242,8 +241,6 @@ namespace RandomPixelImage
             save.Visible = false;
             RuntimePicSave.BackgroundImage.Dispose();
             EditPanel.BringToFront();
-            Dispose();
-            InitializeComponent();
         }
 
         public void GeneratePixel()
@@ -462,33 +459,39 @@ namespace RandomPixelImage
             }
         }
 
-        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
         private bool IsRightSizeGripDown;
         private void RightSizeGrip_MouseDown(object sender, MouseEventArgs e)
         {
-            IsRightSizeGripDown = true;
+            if (e.Button == MouseButtons.Left)
+            {
+                IsRightSizeGripDown = true;
+                lastMousePosition = Control.MousePosition;
+            }
         }
 
         private void RightSizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             IsRightSizeGripDown = false;
+
         }
 
         private void RightSizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (IsRightSizeGripDown)
             {
-                Width = Cursor.Position.X - Left;
-                Application.DoEvents();
+                int dx = MousePosition.X - lastMousePosition.X;
+
+                this.Width += dx;
+
+                lastMousePosition = MousePosition;
             }
         }
         private bool IsLeftSizeGripDown;
         private void LeftSizeGrip_MouseDown(object sender, MouseEventArgs e)
         {
             IsLeftSizeGripDown = true;
+            lastMousePosition = MousePosition;
+
         }
 
         private void LeftSizeGrip_MouseUp(object sender, MouseEventArgs e)
@@ -500,7 +503,12 @@ namespace RandomPixelImage
         {
             if (IsLeftSizeGripDown)
             {
-                this.Width = Cursor.Position.X + this.Left;
+                int dx = MousePosition.X - lastMousePosition.X;
+
+                this.Width -= dx;
+                this.Left += dx;
+
+                lastMousePosition = Control.MousePosition;
             }
         }
 

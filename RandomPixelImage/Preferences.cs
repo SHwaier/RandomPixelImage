@@ -17,7 +17,8 @@ namespace RandomPixelImage
         {
             Red,
             Pink,
-            Blue
+            Blue,
+            Monochrome
         }
 
         [XmlElement]
